@@ -1,0 +1,11 @@
+# Carregar a tabela original no DataFrame
+df = spark.table("OPS_Silver.silver_ccs_contrato")
+
+# Alterar o tipo da coluna 'nome_arquivo' de timestamp para string
+df_modified = df.withColumn("nome_arquivo", df["nome_arquivo"].cast("string"))
+
+# Exibir o esquema da nova tabela para verificar as mudanças
+df_modified.printSchema()
+
+# Salvar o DataFrame modificado de volta em uma nova tabela
+df_modified.write.mode("overwrite").saveAsTable("OPS_Silver.silver_ccs_contrato_modificado")
